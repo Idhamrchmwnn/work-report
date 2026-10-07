@@ -13,7 +13,6 @@
 - **Nomor Issue**: #378 (berdiri sendiri)
 - **Judul Issue**: Ubah Tanggal Terbit Tagihan Penjualan
 - **Status Branch**: `resolve #378` — satu commit, langsung selesai, sudah di-push ke `origin/issue-378`.
-- **Dokumen pendamping**: `.agent/invoice.md` — mencakup rancangan lengkap, termasuk satu kali **pembatalan rencana rev.1** (koreksi jurnal in-place) setelah data produksi dicek dan ternyata tidak relevan, lalu rev.2 → rev.2.1 setelah self-review terhadap AGENTS.md.
 
 ### 🧭 Latar Belakang & Temuan Kunci
 
