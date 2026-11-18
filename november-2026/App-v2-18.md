@@ -154,15 +154,15 @@
 
 - **Nomor Issue**: #561
 - **Judul Issue**: Mobile Frontend: modul Layanan RADIUS (akun PPPoE, sesi online, profil) terhubung ke Partner API
-- **Status Branch**: `Belum di-merge`. Commit `resolve #561` (`1cd22e86`) sudah di-rebase ke atas `resolve #559` dan ada di `origin/issue-561`.
+- **Status Branch**: `Belum di-merge`. Commit `resolve #561` (`a2a0dbd2`) sudah di-rebase ke `master` terbaru (setelah `resolve #563`) dan sudah ada di `origin/issue-561`.
   - Masalah dari laporan kemarin (#556 bisa masuk dua kali) sudah selesai.
-  - Riwayat sebelum squash disimpan di branch lokal `backup/issue-561-pre-squash`.
+  - Riwayat sebelum squash disimpan di branch lokal `backup/issue-561-pre-squash`, dan posisi sebelum rebase sore disimpan di `backup/issue-561-pre-rebase`.
 
 ### 📅 Rincian Commit
 
 #### [c2324d49] - save #561 - 18 November 2026, 12:22
 
-#### [1cd22e86] - resolve #561 - 18 November 2026, 15:41
+#### [a2a0dbd2] - resolve #561 - 18 November 2026, 15:41 (rebase ke `master` pukul 17:19; sebelumnya `1cd22e86`)
 
 - **Ringkasan**:
   - Commit `save #561` kemarin di-rebase ke `resolve #559`, lalu ditambah perbaikan hari ini dan di-squash menjadi `resolve #561`. Rincian modul RADIUS ada di laporan 17 November.
@@ -208,11 +208,12 @@
 
 - **Nomor Issue**: #565
 - **Judul Issue**: Mobile Frontend: modul Paket Broadband (katalog, paket turunan mitra, permohonan) + perbaikan penulisan paket di Partner API
-- **Status Branch**: `Belum di-merge`. Masih work-in-progress (`save #565`), sudah ada di `origin/issue-565`. Dibangun di atas `resolve #561`, jadi menunggu #561 di-merge lebih dulu.
+- **Status Branch**: `Belum di-merge`. Masih work-in-progress (`save #565`). Dibangun di atas `resolve #561`, jadi menunggu #561 di-merge lebih dulu.
+  - Sudah di-rebase lokal ke `resolve #561` yang baru (`2f750f5d`), tetapi **belum di-push**: `origin/issue-565` masih berisi versi lama `f108cb80`. Posisi sebelum rebase disimpan di `backup/issue-565-pre-rebase`.
 
 ### 📅 Rincian Commit
 
-#### [f108cb80] - save #565 - 18 November 2026, 16:59
+#### [2f750f5d] - save #565 - 18 November 2026, 16:59 (rebase pukul 17:19; sebelumnya `f108cb80`)
 
 - **Ringkasan**:
   - Modul Paket Broadband dihubungkan ke Partner API. Tab **Katalog** dan **Paket Turunan** mengikuti desain awal.
@@ -315,9 +316,21 @@
 |---|---|---|
 | #559 | `1fd3bdc5` resolve #559 | Penyelesaian modul Pelanggan mobile: urutan daftar stabil, tata letak tablet, label status terjemahan, perapian sesi; +4 test (sudah di-merge) |
 | #563 | `2b021438` resolve #563 | Backend Partner API RADIUS: cakupan mitra tidak bisa dilebarkan pencarian/filter/`find` klien, `find.customer` berfungsi, daftar-putih body akun, validasi putus sesi & pencarian profil; +12 test (sudah di-merge) |
-| #561 | `c2324d49` save, `1cd22e86` resolve #561 | Penyelesaian modul RADIUS mobile: rebase ke `resolve #559`, urutan daftar stabil, penjadwal penyegaran satu rantai, putus sesi lebih rapi; +8 test |
-| #565 | `f108cb80` save #565 | Modul Paket Broadband mobile (katalog, paket turunan, permohonan, admin tambah paket/turunan) + backend: daftar-putih body paket, harga 0, `create-derived`; 30 test (WIP) |
+| #561 | `c2324d49` save, `a2a0dbd2` resolve #561 | Penyelesaian modul RADIUS mobile: urutan daftar stabil, penjadwal penyegaran satu rantai, putus sesi lebih rapi; +8 test; di-rebase ke `master` terbaru |
+| #565 | `2f750f5d` save #565 | Modul Paket Broadband mobile (katalog, paket turunan, permohonan, admin tambah paket/turunan) + backend: daftar-putih body paket, harga 0, `create-derived`; 30 test (WIP) |
 
 > Catatan merge: `resolve #559` dan `resolve #563` sudah di-merge ke `master` pada 18 November (16:33 dan 16:38).
 >
-> Catatan branch: `issue-565` dibangun di atas `resolve #561`, jadi PR #565 sebaiknya menunggu #561 di-merge. Sebelum PR, kedua branch perlu di-rebase ke `master` terbaru yang sudah memuat #563.
+> Catatan branch: `issue-565` dibangun di atas `resolve #561`, jadi PR #565 sebaiknya menunggu #561 di-merge.
+
+### 🔀 Rebase Sore (17:19)
+
+Setelah #559 dan #563 di-merge, `issue-561` di-rebase ke `master` terbaru, lalu `issue-565` ke `issue-561` yang baru.
+
+- **Konflik `issue-561`**: saat merge #559, Dedy menambah perubahan sendiri, yaitu `columnVisibility` pada daftar dan pengecualian gambar avatar publik di AGENTS.
+  - `mobile-frontend/src/hooks/usePagedList.js`: memakai versi #561 (muat ulang senyap), dan `columnVisibility` dari Dedy dimasukkan kembali ke `buildListParams`.
+  - `AGENTS.md` §2.M butir 4: memakai rumusan #561 yang lebih lengkap. Pengecualian avatar di butir 2 tetap ada.
+- **Konflik `issue-565`**: `backend/src/services/radiusProfile.service.js`, hanya import. Keduanya dipertahankan: `escapeRegex` dari #563 dan `getHiddenPortalPartnerIds` dari #565.
+- **Verifikasi setelah rebase**:
+  - `issue-561`: 152 test mobile lulus, ESLint dan build lulus.
+  - `issue-565`: 170 test mobile lulus, ESLint dan build lulus. 145 test backend terkait (Partner API Paket, RADIUS, paket turunan, cakupan i18n) lulus.
